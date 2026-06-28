@@ -1,6 +1,6 @@
 import { readFile, writeFile } from "node:fs/promises";
 import { homedir } from "node:os";
-import { join } from "node:path";
+import { basename, dirname, join, resolve } from "node:path";
 import {
   directToolsForProfile,
   OCR_PROVENANCE_SERVER_NAME,
@@ -42,10 +42,25 @@ export function defaultMcpConfigPath(): string {
   return join(homedir(), ".pi", "agent", "mcp.json");
 }
 
+function normalizeMcpConfigPath(configPath: string): string {
+  const resolved = resolve(configPath.replace(/^~(?=$|\/)/, homedir()));
+  const file = basename(resolved);
+  const parent = basename(dirname(resolved));
+  if (file === ".mcp.json") return resolved;
+  if (file === "mcp.json" && (parent === ".pi" || parent === "agent")) {
+    return resolved;
+  }
+  throw new Error(
+    `Refusing to write ${resolved}. config_path must point to mcp.json, .pi/mcp.json, or .mcp.json.`,
+  );
+}
+
 export async function applyOcrProfile(
   input: ApplyProfileInput,
 ): Promise<ApplyProfileResult> {
-  const configPath = input.configPath ?? defaultMcpConfigPath();
+  const configPath = normalizeMcpConfigPath(
+    input.configPath ?? defaultMcpConfigPath(),
+  );
   const serverName = input.serverName ?? OCR_PROVENANCE_SERVER_NAME;
   const raw = await readFile(configPath, "utf8");
   const config = JSON.parse(raw) as McpConfig;

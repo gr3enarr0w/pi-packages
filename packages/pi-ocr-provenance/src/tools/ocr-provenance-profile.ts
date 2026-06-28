@@ -37,7 +37,7 @@ export function registerOcrProvenanceProfile(pi: ExtensionAPI): void {
       config_path: Type.Optional(
         Type.String({
           description:
-            "Path to Pi MCP config. Defaults to ~/.pi/agent/mcp.json.",
+            "Path to Pi MCP config. Must be mcp.json, .pi/mcp.json, or .mcp.json. Defaults to ~/.pi/agent/mcp.json.",
         }),
       ),
       dry_run: Type.Optional(
@@ -75,7 +75,7 @@ export function registerOcrProvenanceProfile(pi: ExtensionAPI): void {
             `${action} OCR Provenance profile "${profile}" for "${result.serverName}".`,
             `Direct tools: ${countLabel}.`,
             `Config: ${result.configPath}`,
-            result.dryRun
+            result.dryRun || !result.changed
               ? "No files were changed."
               : "A .bak file was written before changes.",
             "Reload or restart Pi for direct-tool registration to refresh.",

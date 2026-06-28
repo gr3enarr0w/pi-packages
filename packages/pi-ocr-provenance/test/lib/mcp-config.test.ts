@@ -1,4 +1,4 @@
-import { mkdtemp, readFile, writeFile } from "node:fs/promises";
+import { mkdir, mkdtemp, readFile, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
@@ -7,7 +7,9 @@ import { MINIMAL_TOOLS } from "#src/lib/profiles";
 
 async function writeFixture() {
   const dir = await mkdtemp(join(tmpdir(), "pi-ocr-"));
-  const configPath = join(dir, "mcp.json");
+  const piDir = join(dir, ".pi");
+  await mkdir(piDir, { recursive: true });
+  const configPath = join(piDir, "mcp.json");
   await writeFile(
     configPath,
     `${JSON.stringify(
@@ -63,5 +65,18 @@ describe("applyOcrProfile", () => {
 
     expect(result.dryRun).toBe(true);
     expect(await readFile(configPath, "utf8")).toBe(before);
+  });
+
+  it("rejects non-MCP config paths", async () => {
+    const dir = await mkdtemp(join(tmpdir(), "pi-ocr-"));
+    const configPath = join(dir, "shellrc");
+    await writeFile(configPath, "export PATH=/tmp\n", "utf8");
+
+    await expect(
+      applyOcrProfile({
+        profile: "minimal",
+        configPath,
+      }),
+    ).rejects.toThrow("config_path must point to");
   });
 });
