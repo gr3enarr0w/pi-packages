@@ -1,0 +1,5 @@
+{
+  "profile": "full",
+  "description": "Promote all cached OCR Provenance MCP tools as direct Pi tools for dedicated OCR-heavy sessions.",
+  "directTools": true
+}

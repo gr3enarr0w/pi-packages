@@ -8,6 +8,7 @@
     "../packages/pi-subagents-worktrees",
     "../packages/pi-session-tools",
     "../packages/pi-nocd",
+    "../packages/pi-ocr-provenance",
 
     { "source": "npm:@gotgenes/pi-colgrep", "extensions": [], "skills": [] },
     {
@@ -28,6 +29,11 @@
       "skills": []
     },
     { "source": "npm:@gotgenes/pi-nocd", "extensions": [], "skills": [] },
+    {
+      "source": "npm:@gr3enarr0w/pi-ocr-provenance",
+      "extensions": [],
+      "skills": []
+    },
 
     "npm:pi-prompt-template-model",
     "npm:pi-web-access",
