@@ -1,0 +1,13 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "ignoreDeprecations": "6.0",
+    "paths": {
+      "#profiles/*": ["./profiles/*.json"],
+      "#src/*": ["./src/*"],
+      "#test/*": ["./test/*"]
+    },
+    "types": ["node", "vitest"]
+  },
+  "include": ["src", "test"]
+}

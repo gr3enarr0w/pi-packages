@@ -15,6 +15,7 @@ Some packages (like pi-permission-system) are designed for broad use; others scr
 | [@gotgenes/pi-session-tools](./packages/pi-session-tools/)             | Session naming and context bridge for multi-session workflows  | [![npm](https://img.shields.io/npm/dm/@gotgenes/pi-session-tools)](https://www.npmjs.com/package/@gotgenes/pi-session-tools)             |
 | [@gotgenes/pi-subagents-worktrees](./packages/pi-subagents-worktrees/) | Git worktree isolation WorkspaceProvider for pi-subagents      | [![npm](https://img.shields.io/npm/dm/@gotgenes/pi-subagents-worktrees)](https://www.npmjs.com/package/@gotgenes/pi-subagents-worktrees) |
 | [@gotgenes/pi-nocd](./packages/pi-nocd/)                               | System-prompt guard against cd-prefixing the working directory | [![npm](https://img.shields.io/npm/dm/@gotgenes/pi-nocd)](https://www.npmjs.com/package/@gotgenes/pi-nocd)                               |
+| [@gr3enarr0w/pi-ocr-provenance](./packages/pi-ocr-provenance/)         | OCR Provenance MCP skills and direct-tool profiles             | [![npm](https://img.shields.io/npm/dm/@gr3enarr0w/pi-ocr-provenance)](https://www.npmjs.com/package/@gr3enarr0w/pi-ocr-provenance)       |
 
 Each package has its own README with setup instructions, usage, and configuration details.
 

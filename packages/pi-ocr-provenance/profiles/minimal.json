@@ -1,0 +1,25 @@
+{
+  "profile": "minimal",
+  "description": "Small direct-tool profile for setup, ingest, status, search, document read, chunks, provenance verification, VLM status, and health checks.",
+  "directTools": [
+    "ocr_guide",
+    "ocr_db_list",
+    "ocr_db_select",
+    "ocr_db_stats",
+    "ocr_ingest_files",
+    "ocr_ingest_directory",
+    "ocr_process_pending",
+    "ocr_status",
+    "ocr_search",
+    "ocr_rag_context",
+    "ocr_document_list",
+    "ocr_document_get",
+    "ocr_document_structure",
+    "ocr_chunk_get",
+    "ocr_chunk_context",
+    "ocr_provenance_get",
+    "ocr_provenance_verify",
+    "ocr_vlm_status",
+    "ocr_health_check"
+  ]
+}
