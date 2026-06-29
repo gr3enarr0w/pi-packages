@@ -77,6 +77,6 @@ describe("applyOcrProfile", () => {
         profile: "minimal",
         configPath,
       }),
-    ).rejects.toThrow("config_path must point to");
+    ).rejects.toThrow("~/.pi/agent/mcp.json");
   });
 });

@@ -3,6 +3,7 @@
   "compilerOptions": {
     "ignoreDeprecations": "6.0",
     "paths": {
+      "#profiles/*": ["./profiles/*.json"],
       "#src/*": ["./src/*"],
       "#test/*": ["./test/*"]
     },

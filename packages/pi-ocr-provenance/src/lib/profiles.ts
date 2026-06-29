@@ -1,82 +1,36 @@
+import balancedProfile from "#profiles/balanced";
+import fullProfile from "#profiles/full";
+import minimalProfile from "#profiles/minimal";
+
 export type OcrProvenanceProfile = "minimal" | "balanced" | "full";
 
 export const OCR_PROVENANCE_SERVER_NAME = "ocr-provenance";
 
-export const MINIMAL_TOOLS = [
-  "ocr_guide",
-  "ocr_db_list",
-  "ocr_db_select",
-  "ocr_db_stats",
-  "ocr_ingest_files",
-  "ocr_ingest_directory",
-  "ocr_process_pending",
-  "ocr_status",
-  "ocr_search",
-  "ocr_rag_context",
-  "ocr_document_list",
-  "ocr_document_get",
-  "ocr_document_structure",
-  "ocr_chunk_get",
-  "ocr_chunk_context",
-  "ocr_provenance_get",
-  "ocr_provenance_verify",
-  "ocr_vlm_status",
-  "ocr_health_check",
-] as const;
+interface ToolListProfile {
+  profile: "minimal" | "balanced";
+  description: string;
+  directTools: string[];
+}
 
-export const BALANCED_TOOLS = [
-  ...MINIMAL_TOOLS,
-  "ocr_db_recent",
-  "ocr_db_summary",
-  "ocr_retry_failed",
-  "ocr_reprocess",
-  "ocr_convert_raw",
-  "ocr_search_saved",
-  "ocr_search_cross_db",
-  "ocr_search_export",
-  "ocr_document_find_similar",
-  "ocr_document_duplicates",
-  "ocr_document_versions",
-  "ocr_document_page",
-  "ocr_chunk_list",
-  "ocr_provenance_export",
-  "ocr_provenance_query",
-  "ocr_provenance_timeline",
-  "ocr_provenance_processor_stats",
-  "ocr_vlm_describe",
-  "ocr_vlm_process",
-  "ocr_extract_images",
-  "ocr_image_list",
-  "ocr_image_get",
-  "ocr_image_stats",
-  "ocr_image_pending",
-  "ocr_image_search",
-  "ocr_image_reanalyze",
-  "ocr_evaluation_report",
-  "ocr_document_report",
-  "ocr_report_overview",
-  "ocr_report_performance",
-  "ocr_error_analytics",
-  "ocr_trends",
-  "ocr_document_compare",
-  "ocr_comparison_list",
-  "ocr_comparison_get",
-  "ocr_comparison_discover",
-  "ocr_comparison_batch",
-  "ocr_cluster_documents",
-  "ocr_cluster_list",
-  "ocr_cluster_get",
-  "ocr_embedding_stats",
-  "ocr_tag_list",
-  "ocr_tag_search",
-] as const;
+interface FullProfile {
+  profile: "full";
+  description: string;
+  directTools: true;
+}
+
+const MINIMAL_PROFILE = minimalProfile as ToolListProfile;
+const BALANCED_PROFILE = balancedProfile as ToolListProfile;
+const FULL_PROFILE = fullProfile as FullProfile;
+
+export const MINIMAL_TOOLS = MINIMAL_PROFILE.directTools;
+export const BALANCED_TOOLS = BALANCED_PROFILE.directTools;
 
 export function directToolsForProfile(
   profile: OcrProvenanceProfile,
 ): true | string[] {
-  if (profile === "full") return true;
-  if (profile === "balanced") return [...new Set(BALANCED_TOOLS)];
-  return [...new Set(MINIMAL_TOOLS)];
+  if (profile === "full") return FULL_PROFILE.directTools;
+  if (profile === "balanced") return [...new Set(BALANCED_PROFILE.directTools)];
+  return [...new Set(MINIMAL_PROFILE.directTools)];
 }
 
 export function profileToolCount(

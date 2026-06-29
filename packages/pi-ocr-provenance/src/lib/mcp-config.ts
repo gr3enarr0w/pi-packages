@@ -51,7 +51,7 @@ function normalizeMcpConfigPath(configPath: string): string {
     return resolved;
   }
   throw new Error(
-    `Refusing to write ${resolved}. config_path must point to mcp.json, .pi/mcp.json, or .mcp.json.`,
+    `Refusing to write ${resolved}. config_path must point to ~/.pi/agent/mcp.json, a project .pi/mcp.json, or .mcp.json.`,
   );
 }
 

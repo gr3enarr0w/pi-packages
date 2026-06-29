@@ -4,6 +4,7 @@
   "description": "Pi skills and direct-tool profiles for the OCR Provenance MCP server.",
   "type": "module",
   "imports": {
+    "#profiles/*": "./profiles/*.json",
     "#src/*": "./src/*",
     "#test/*": "./test/*"
   },
