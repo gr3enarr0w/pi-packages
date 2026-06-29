@@ -1,4 +1,4 @@
-import { mkdir, mkdtemp, readFile, writeFile } from "node:fs/promises";
+import { mkdir, mkdtemp, readdir, readFile, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
@@ -45,12 +45,17 @@ describe("applyOcrProfile", () => {
       };
     };
     expect(result.changed).toBe(true);
+    expect(result.backupPath).toMatch(/mcp\.json\.bak\./);
     expect(updated.mcpServers["ocr-provenance"].command).toBe(
       "pi-ocr-provenance-mcp",
     );
     expect(updated.mcpServers["ocr-provenance"].directTools).toEqual([
       ...MINIMAL_TOOLS,
     ]);
+    const backupFiles = (await readdir(join(configPath, ".."))).filter((file) =>
+      file.startsWith("mcp.json.bak."),
+    );
+    expect(backupFiles).toHaveLength(1);
   });
 
   it("does not write when dry_run is true", async () => {
@@ -64,6 +69,7 @@ describe("applyOcrProfile", () => {
     });
 
     expect(result.dryRun).toBe(true);
+    expect(result.backupPath).toBeUndefined();
     expect(await readFile(configPath, "utf8")).toBe(before);
   });
 

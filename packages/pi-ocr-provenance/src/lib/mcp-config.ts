@@ -36,6 +36,7 @@ export interface ApplyProfileResult {
   nextDirectTools: boolean | string[];
   changed: boolean;
   dryRun: boolean;
+  backupPath?: string;
 }
 
 export function defaultMcpConfigPath(): string {
@@ -76,9 +77,13 @@ export async function applyOcrProfile(
   server.directTools = nextDirectTools;
   const changed =
     JSON.stringify(previousDirectTools) !== JSON.stringify(nextDirectTools);
+  const backupPath =
+    !input.dryRun && changed
+      ? `${configPath}.bak.${new Date().toISOString().replace(/[:.]/g, "-")}`
+      : undefined;
 
-  if (!input.dryRun && changed) {
-    await writeFile(`${configPath}.bak`, raw, "utf8");
+  if (backupPath) {
+    await writeFile(backupPath, raw, "utf8");
     await writeFile(configPath, `${JSON.stringify(config, null, 2)}\n`, "utf8");
   }
 
@@ -90,5 +95,6 @@ export async function applyOcrProfile(
     nextDirectTools,
     changed,
     dryRun: Boolean(input.dryRun),
+    backupPath,
   };
 }
